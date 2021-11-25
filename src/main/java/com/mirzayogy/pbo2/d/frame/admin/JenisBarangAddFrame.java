@@ -5,6 +5,9 @@
  */
 package com.mirzayogy.pbo2.d.frame.admin;
 
+import com.mirzayogy.pbo2.d.model.JenisBarang;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author mirza
@@ -16,6 +19,20 @@ public class JenisBarangAddFrame extends javax.swing.JFrame {
      */
     public JenisBarangAddFrame() {
         initComponents();
+        setLocationRelativeTo(null);
+        jtfIdJenisBarang.setEnabled(false);
+        jtfNamaJenisBarang.requestFocus();
+    }
+    
+    public JenisBarangAddFrame(JenisBarang jenisBarang){
+        initComponents();
+        setLocationRelativeTo(null);
+        
+        jtfIdJenisBarang.setText(String.valueOf(jenisBarang.getId()));
+        jtfNamaJenisBarang.setText(jenisBarang.getNamaJenisBarang());
+        
+        jtfIdJenisBarang.setEnabled(false);
+        jtfNamaJenisBarang.requestFocus();
     }
 
     /**
@@ -29,11 +46,11 @@ public class JenisBarangAddFrame extends javax.swing.JFrame {
 
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jtfNamaJenisBarang = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        jtfIdJenisBarang = new javax.swing.JTextField();
+        btnSimpan = new javax.swing.JButton();
+        btnTutup = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,17 +61,17 @@ public class JenisBarangAddFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Id Jenis Barang");
 
-        jButton6.setText("Simpan");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        btnSimpan.setText("Simpan");
+        btnSimpan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                btnSimpanActionPerformed(evt);
             }
         });
 
-        jButton7.setText("Tutup");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btnTutup.setText("Tutup");
+        btnTutup.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btnTutupActionPerformed(evt);
             }
         });
 
@@ -71,15 +88,15 @@ public class JenisBarangAddFrame extends javax.swing.JFrame {
                             .addComponent(jLabel3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField2)
-                            .addComponent(jTextField1)))
+                            .addComponent(jtfIdJenisBarang)
+                            .addComponent(jtfNamaJenisBarang)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 243, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jButton6)
+                                .addComponent(btnSimpan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton7))
+                                .addComponent(btnTutup))
                             .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
         );
@@ -91,28 +108,48 @@ public class JenisBarangAddFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfIdJenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jtfNamaJenisBarang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton7)
-                    .addComponent(jButton6))
+                    .addComponent(btnTutup)
+                    .addComponent(btnSimpan))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
+        
+        JenisBarang jenisBarang = new JenisBarang();
+        jenisBarang.setNamaJenisBarang(jtfNamaJenisBarang.getText());
+        
+        if(jtfIdJenisBarang.getText().equals("")){
+            if(jenisBarang.create()){
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Gagal simpan data");
+            }
+        } else {
+            
+            jenisBarang.setId(Integer.parseInt(jtfIdJenisBarang.getText()));
+            if(jenisBarang.update()){
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Gagal simpan data");
+            }
+        }
+        
+        
+    }//GEN-LAST:event_btnSimpanActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btnTutupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTutupActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_btnTutupActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,12 +187,12 @@ public class JenisBarangAddFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
+    private javax.swing.JButton btnSimpan;
+    private javax.swing.JButton btnTutup;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jtfIdJenisBarang;
+    private javax.swing.JTextField jtfNamaJenisBarang;
     // End of variables declaration//GEN-END:variables
 }
