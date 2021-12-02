@@ -2,6 +2,7 @@ package com.mirzayogy.pbo2.d.frame;
 
 import com.mirzayogy.pbo2.d.frame.admin.MainAdmin;
 import com.mirzayogy.pbo2.d.frame.kasir.MainKasir;
+import com.mirzayogy.pbo2.d.libs.Pref;
 import com.mirzayogy.pbo2.d.model.Pengguna;
 import javax.swing.JOptionPane;
 
@@ -9,6 +10,7 @@ public class Login extends javax.swing.JFrame {
 
     public Login() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -91,6 +93,10 @@ public class Login extends javax.swing.JFrame {
         pengguna.setUsername(jtfUser.getText());
         pengguna.setPassword(new String(jtfPass.getPassword()));
         if(pengguna.login()){
+            
+            Pref pref = new Pref();
+            pref.save(pengguna.getUsername(), pengguna.getId(), pengguna.isIsAdmin());
+            
             if(pengguna.isIsAdmin()){
                 MainAdmin mainAdmin = new MainAdmin();
                 mainAdmin.setVisible(true);
