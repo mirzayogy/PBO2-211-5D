@@ -93,6 +93,11 @@ public class JenisBarangViewFrame extends javax.swing.JFrame {
         });
 
         jButton4.setText("Hapus");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Batal");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -216,6 +221,30 @@ public class JenisBarangViewFrame extends javax.swing.JFrame {
         tampilData(list);
         
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int barisTerpilih = tbJenisbarang.getSelectedRow();
+        if(barisTerpilih >= 0){
+            
+            int pilihanHapus = JOptionPane.showConfirmDialog(null, 
+                   "Yakin hapus data? ", 
+                   "Konfirmasi hapus data", 
+                   JOptionPane.YES_NO_OPTION);
+            
+            if(pilihanHapus == 0){
+                TableModel m = tbJenisbarang.getModel();
+            
+                int id = Integer.parseInt(m.getValueAt(barisTerpilih, 0).toString());
+                String namaJenisBarang = m.getValueAt(barisTerpilih, 1).toString();
+
+                JenisBarang jb = new JenisBarang();
+                jb.setId(id);
+                jb.delete();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Data belum dipilih");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     public void tampilData(ArrayList<JenisBarang> list){
         DefaultTableModel tableModel = (DefaultTableModel) tbJenisbarang.getModel();
